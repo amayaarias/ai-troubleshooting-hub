@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Troubleshooting Hub</title>
+    <!-- Cargamos Bootstrap para que se vea moderno automáticamente -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero { background-color: #1a73e8; color: white; padding: 50px 0; border-radius: 0 0 25px 25px; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; height: 100%; }
+        .card:hover { transform: translateY(-5px); }
+        .card-header { background-color: #ffffff; border-bottom: 2px solid #e8eaed; font-weight: bold; font-size: 1.25rem; color: #202124; border-radius: 12px 12px 0 0 !important; }
+        .tool-title { color: #1a73e8; font-weight: bold; text-decoration: none; font-size: 1.1rem; }
+        .tool-title:hover { text-decoration: underline; color: #1557b0; }
+        .playbook-section { background-color: #e6f4ea; border-left: 6px solid #34a853; padding: 25px; border-radius: 10px; margin-bottom: 40px; }
+        .badge-custom { background-color: #fbbc04; color: #202124; font-size: 0.8em; margin-left: 5px; }
+        .detail-text { font-size: 0.9rem; color: #5f6368; line-height: 1.4; }
+        strong { color: #202124; }
+    </style>
+</head>
+<body>
+
+    <div class="hero text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Gen AI Hub</h1>
+            <p class="lead mt-3">Herramientas, Playbooks y Debugging Trees para el Gen AI team🦁</p>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <!-- Playbooks Section -->
+        <div class="playbook-section shadow-sm">
+            <h4 class="mb-3">📚 Playbooks & Debugging Trees</h4>
+            <p class="detail-text">Antes de crear una consult para vSME o TSG, asegúrate de revisar los Playbooks y Debugging Trees:</p>
+            <ul class="mb-0">
+                <li><a href="http://go/vais-playbook" target="_blank" class="fw-bold">VAIS / VAIS:C General Playbook</a> - Guía de soporte para Vertex AI Search & Search for commerce.</li>
+                <li><a href="http://go/document-ai-playbook" target="_blank" class="fw-bold">Document AI Playbook</a> - Troubleshooting general para Document AI.</li>
+                <li><a href="http://go/vertex-ai-rag-engine-playbook" target="_blank" class="fw-bold">RAG Engine Playbook</a> - Troubleshooting general para RAG Engine.</li>
+                <li><a href="http://go/vertex-genai-playbooks" target="_blank" class="fw-bold">Gen AI Playbook</a> - Diagnóstico para LLMs y Gemini.</li>
+            </ul>
+        </div>
+
+        <div class="row g-4">
+            <!-- Document AI -->
+            <div class="col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">📄 Document AI & RAG</div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <a href="https://caiis-console-autopush-us-central1.corp.google.com/lookup?serviceid=dai" class="tool-title" target="_blank">CAIIS Console (Autopush)</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Un procesador falla al crearse o no responde.<br>
+                            <strong>Qué buscar:</strong> Estados de despliegue y flags de error en infraestructura.</p>
+                        </div>
+                        <div class="mb-4">
+                            <a href="https://monitoring.corp.google.com/dashboard/serviceruntime%2Fapi%2Fconsumer?scope=cloud_project_number%3D1044988948839&duration=3600&refresh=90&filters=service%3Ddocumentai.googleapis.com&cols=1&preview=2646497584s" class="tool-title" target="_blank">Monitoring (serviceruntime)</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Picos de latencia o errores 5xx reportados.<br>
+                            <strong>Qué buscar:</strong> Gráficas de respuesta HTTP (429s, 5xx) filtrando por método.</p>
+                        </div>
+                        <div>
+                            <a href="http://go/caiis-console" class="tool-title" target="_blank">RAG Engine Console (go/caiis-console)</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Fallas en sincronización de Corpus o ingesta.<br>
+                            <strong>Qué buscar:</strong> Mensajes de error del backend asociados al estado del recurso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Applications (VAIS) -->
+            <div class="col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">🔍 Vertex AI Search (VAIS)</div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <a href="http://go/ucs-tool" class="tool-title" target="_blank">UCS Tool (go/ucs-tool)</a> <span class="badge rounded-pill badge-custom">Esencial</span>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> El cliente pregunta por qué un doc no aparece o rankea mal.<br>
+                            <strong>Qué buscar:</strong> Usa el <code>attributionToken</code> para validar Retrieval Score y Serving Controls.</p>
+                        </div>
+                        <div>
+                            <a href="https://plx.corp.google.com/scripts2/" class="tool-title" target="_blank">Plx Scripts & Spanner</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Operaciones largas (LROs) atascadas o fallas de conectores.<br>
+                            <strong>Qué buscar:</strong> El <code>operation_id</code> para ver el estado de chunks procesados o errores de parseo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commerce (VAIS:C) -->
+            <div class="col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">🛒 Search for Commerce (VAIS:C)</div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <a href="http://go/retail-tool" class="tool-title" target="_blank">Retail Tool (go/retail-tool)</a> <span class="badge rounded-pill badge-custom">Esencial</span>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Un SKU no aparece o el catálogo está desordenado.<br>
+                            <strong>Qué buscar:</strong> Search Replay para ver el <code>stockState</code> y reglas de catálogo activas.</p>
+                        </div>
+                        <div>
+                            <span class="tool-title">User Events Dashboard (Monitoring)</span>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Autocompletado o recomendaciones de baja calidad.<br>
+                            <strong>Qué buscar:</strong> Errores de validación JSON en la ingesta o caídas en el volumen de eventos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gen AI -->
+            <div class="col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">🧠 Gen AI on Vertex AI</div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <a href="https://overwatch.corp.google.com/project_reputation/project-number" class="tool-title" target="_blank">Overwatch</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Errores de quotas o quotas rejected.<br>
+                            <strong>Qué buscar:</strong> Verificar si tiene LOW reputation el customer.</p>
+                        </div>
+                        <div class="mb-4">
+                            <a href="https://sherlog.corp.google.com/" class="tool-title" target="_blank">Sherlog</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> Excepciones raras en llamadas a modelos fundacionales.<br>
+                            <strong>Qué buscar:</strong> Usa el <code>trace_id</code> para encontrar errores profundos de backend.</p>
+                        </div>
+                        <div>
+                            <a href="http://go/elm-gemini-error-dashboard" class="tool-title" target="_blank">Gemini Error Dashboard</a>
+                            <p class="detail-text mt-1"><strong>Escenario:</strong> El modelo responde vacío o bloquea prompts.<br>
+                            <strong>Qué buscar:</strong> Códigos HTTP 429 (Cuota) o disparadores de filtros (Safety Ratings).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
